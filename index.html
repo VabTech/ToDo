@@ -3,7 +3,31 @@
 <head>
   <title>To-Do List</title>
   <style>
-    /* Your CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #taskList {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    li.completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+    button {
+      margin-left: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    input[type="text"] {
+      padding: 5px;
+      width: 200px;
+    }
   </style>
 </head>
 <body>
@@ -55,16 +79,23 @@
       taskList.innerHTML = "";
       tasks.forEach((task, index) => {
         const listItem = document.createElement("li");
+        listItem.className = task.completed ? "completed" : "";
+
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.checked = task.completed;
         checkbox.addEventListener("change", () => completeTask(index));
         listItem.appendChild(checkbox);
-        listItem.textContent = task.text;
+
+        const taskText = document.createElement("span");
+        taskText.textContent = task.text;
+        listItem.appendChild(taskText);
+
         const removeButton = document.createElement("button");
         removeButton.textContent = "Remove";
         removeButton.addEventListener("click", () => removeTask(index));
         listItem.appendChild(removeButton);
+
         taskList.appendChild(listItem);
       });
     }
